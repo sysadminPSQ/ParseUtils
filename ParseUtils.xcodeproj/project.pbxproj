@@ -13,6 +13,10 @@
 		3813B62E1BA8484E0079DA84 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3813B62D1BA8484E0079DA84 /* Images.xcassets */; };
 		3813B6311BA8484E0079DA84 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3813B62F1BA8484E0079DA84 /* LaunchScreen.xib */; };
 		3813B63D1BA8484E0079DA84 /* ParseUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813B63C1BA8484E0079DA84 /* ParseUtilsTests.swift */; };
+		3813B6481BA84C230079DA84 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813B6471BA84C230079DA84 /* Common.swift */; };
+		3813B64B1BA84CA80079DA84 /* CollectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813B6491BA84CA80079DA84 /* CollectionHelper.swift */; };
+		3813B64C1BA84CA80079DA84 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813B64A1BA84CA80079DA84 /* CollectionViewCell.swift */; };
+		3813B64E1BA84E1A0079DA84 /* SubClassedPFObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3813B64D1BA84E1A0079DA84 /* SubClassedPFObjects.swift */; };
 		520A1115DF1CC19276F46CA6 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 825BC49F03C8F0C86284541E /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -37,6 +41,10 @@
 		3813B6361BA8484E0079DA84 /* ParseUtilsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParseUtilsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3813B63B1BA8484E0079DA84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3813B63C1BA8484E0079DA84 /* ParseUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseUtilsTests.swift; sourceTree = "<group>"; };
+		3813B6471BA84C230079DA84 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		3813B6491BA84CA80079DA84 /* CollectionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionHelper.swift; sourceTree = "<group>"; };
+		3813B64A1BA84CA80079DA84 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		3813B64D1BA84E1A0079DA84 /* SubClassedPFObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubClassedPFObjects.swift; sourceTree = "<group>"; };
 		825BC49F03C8F0C86284541E /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFEA03AC560810DA6CD2C4C8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F891025608BF497DEFE98EEA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -86,7 +94,11 @@
 			children = (
 				3813B6261BA8484E0079DA84 /* AppDelegate.swift */,
 				3813B6281BA8484E0079DA84 /* ViewController.swift */,
+				3813B6491BA84CA80079DA84 /* CollectionHelper.swift */,
+				3813B64A1BA84CA80079DA84 /* CollectionViewCell.swift */,
 				3813B62A1BA8484E0079DA84 /* Main.storyboard */,
+				3813B64D1BA84E1A0079DA84 /* SubClassedPFObjects.swift */,
+				3813B6471BA84C230079DA84 /* Common.swift */,
 				3813B62D1BA8484E0079DA84 /* Images.xcassets */,
 				3813B62F1BA8484E0079DA84 /* LaunchScreen.xib */,
 				3813B6241BA8484E0079DA84 /* Supporting Files */,
@@ -287,7 +299,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3813B64C1BA84CA80079DA84 /* CollectionViewCell.swift in Sources */,
 				3813B6291BA8484E0079DA84 /* ViewController.swift in Sources */,
+				3813B64B1BA84CA80079DA84 /* CollectionHelper.swift in Sources */,
+				3813B64E1BA84E1A0079DA84 /* SubClassedPFObjects.swift in Sources */,
+				3813B6481BA84C230079DA84 /* Common.swift in Sources */,
 				3813B6271BA8484E0079DA84 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
