@@ -16,10 +16,14 @@ class CollectionHelper {
     func RoomFacilities(collectionView: UICollectionView, indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("roomFacilities", forIndexPath: indexPath) as! RoomFacilitiesCell
+    
+        println("The value in exsting object is : \(existingRF)")
         
-        
-        println("\(existingRF)")
-        //cell.roomFacilitiesLbl.text = existingRF["name"] as? String
+        for object in existingRF as [PFObject] {
+            
+            cell.roomFacilitiesLbl.text = object["name"] as! String
+            //cell.roomFacilitiesLbl.text = object[indexPath.row]
+        }
         
         return cell
     }

@@ -11,7 +11,7 @@ import Parse
 import Bolts
 import SwiftUtils
 
-var existingRF: PFObject!
+var existingRF = [PFObject]()
 
 class ViewController: UIViewController {
 
@@ -38,64 +38,18 @@ class ViewController: UIViewController {
         
         self.view.endEditing(true)
         
-        if let updateObject = existingRF as PFObject? {
-            
-            var errors = [String]()
-            
-            pb.bindToParse(addRoomFacilitiesTF,
-                validators: [pb.requiredValidator("Name is Required")],
-                succFn: pb.setToParse(updateObject, key: "name"),
-                errFn: pb.redErrMsg,
-                errAccumulator: { (errMsg) in errors += errMsg }
-            )
-            
-            if errors.count == 0 {
-                
-                pb.saveObj(updateObject,
-                    succFn: {
-                        () in
-                        println("Success")
-                    },
-                    failFn: {
-                        (error: NSError) in
-                        log.warning("RF - \(error.userInfo)")
-                })
-            } else {
-                
-                alert("Invalid", errorMsg: "\(errors[0])")
-            }
-            
-        } else {
-            
-            var roomFacilities = PFObject(className: "RoomFacility")
-            
-            var errors = [String]()
-            
-            pb.bindToParse(addRoomFacilitiesTF,
-                validators: [pb.requiredValidator("Name is Required")],
-                succFn: pb.setToParse(roomFacilities, key: "name"),
-                errFn: pb.redErrMsg,
-                errAccumulator: { (errMsg) in errors += errMsg }
-            )
-            
-            if errors.count == 0 {
-                
-                pb.saveObj(roomFacilities,
-                    succFn: {
-                        () in
-                        println("Success")
-                    },
-                    failFn: {
-                        (error: NSError) in
-                        
-                        log.warning("RF - \(error.userInfo)")
-                })
-            } else {
-                
-                alert("Invalid", errorMsg: "\(errors[0])")
-            }
-            
-        }
+        let rf = RoomFacility()
+        rf.name = "Room Service"
+        
+        pb.saveObj(rf,
+            succFn: {
+                () in
+                println("Success")
+            },
+            failFn: {
+                (error: NSError) in
+                log.warning("RF - \(error.userInfo)")
+        })
     }
     
     func loadRoomFacilities() {
@@ -111,7 +65,7 @@ class ViewController: UIViewController {
                     
                     for object in objects {
                         
-                        existingRF = object
+                        existingRF.append(object)
                     }
                 }
                 
@@ -136,7 +90,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        return 10
+        return existingRF.count
     }
     
     //MARK: Multiple collection views in one control - Refer CollectionHelper.swift
