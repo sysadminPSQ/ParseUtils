@@ -1,0 +1,28 @@
+PODS:
+  - Bolts/Tasks (1.2.2)
+  - LogKit (1.0.4)
+  - Parse (1.8.3):
+    - Bolts/Tasks (>= 1.2.2)
+  - SwiftUtils (0.0.1):
+    - Parse
+
+DEPENDENCIES:
+  - LogKit
+  - SwiftUtils (from `https://github.com/sysadminPSQ/SwiftUtils.git`)
+
+EXTERNAL SOURCES:
+  SwiftUtils:
+    :git: https://github.com/sysadminPSQ/SwiftUtils.git
+
+CHECKOUT OPTIONS:
+  SwiftUtils:
+    :commit: 29464ccf2e9c3fcf5e2c29128451bb6f2988ff35
+    :git: https://github.com/sysadminPSQ/SwiftUtils.git
+
+SPEC CHECKSUMS:
+  Bolts: 20a2bd788273360cb1e31530dc19b8544eef2544
+  LogKit: f785d7b331fd923a970c0970d49b009e8495cb7a
+  Parse: 4b251ac63b76d12b334a32579cc3b174446f0c39
+  SwiftUtils: 16a3fb68f1cf7edcca1793921e9b9c3738951931
+
+COCOAPODS: 0.38.2
