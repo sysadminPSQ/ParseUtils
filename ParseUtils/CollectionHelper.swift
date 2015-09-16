@@ -13,17 +13,13 @@ import Bolts
 
 class CollectionHelper {
     
+    var test: [PFObject]!
+    
     func RoomFacilities(collectionView: UICollectionView, indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("roomFacilities", forIndexPath: indexPath) as! RoomFacilitiesCell
-    
-        println("The value in exsting object is : \(existingRF)")
         
-        for object in existingRF as [PFObject] {
-            
-            cell.roomFacilitiesLbl.text = object["name"] as! String
-            //cell.roomFacilitiesLbl.text = object[indexPath.row]
-        }
+        cell.roomFacilitiesLbl.text = existingRF[indexPath.row]["name"] as? String
         
         return cell
     }

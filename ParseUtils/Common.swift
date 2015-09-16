@@ -113,10 +113,10 @@ extension UIViewController
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        animateViewMoving(true, moveValue: 180)
+        animateViewMoving(true, moveValue: 10)
     }
     func textFieldDidEndEditing(textField: UITextField) {
-        animateViewMoving(false, moveValue: 180)
+        animateViewMoving(false, moveValue: 10)
     }
     
     /* This function is to make sure that the view moves up and down relative to the keyboard hieght which tends to hide fields from view */

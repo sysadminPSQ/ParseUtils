@@ -18,25 +18,16 @@ class RoomType : SubClassedPFObjects, PFSubclassing {
         registerSubclass()
     }
     
-    override func addValue(key: String, value: Any) {
-        if key == "roomTypes" {
-            roomTypes.append(value as! String)
-        }
-    }
-    
     class func parseClassName() -> String {
         return "RoomType"
     }
     
-    override func hasErrors() -> Bool {
-        return buildingName.isEmpty || totalFloors <= 0 || roomTypes.count == 0
-    }
-    
-    @NSManaged var buildingName: String
-    @NSManaged var totalFloors: Int
-    @NSManaged var roomTypes: [String]
+    @NSManaged var name: String
+    @NSManaged var roomFacilities: [PFObject]?
+    @NSManaged var roomSize: String
     @NSManaged var entityID: PFObject!
     @NSManaged var createdBy: PFUser!
+    @NSManaged var Description: String
     
 }
 
@@ -51,6 +42,24 @@ class RoomFacility : SubClassedPFObjects, PFSubclassing {
     }
     
     @NSManaged var name: String
+    @NSManaged var entityID: PFObject!
+    @NSManaged var createdBy: PFUser!
+    
+}
+
+class Building : SubClassedPFObjects, PFSubclassing {
+    
+    override class func initialize() {
+        registerSubclass()
+    }
+    
+    class func parseClassName() -> String {
+        return "Building"
+    }
+    
+    @NSManaged var name: String
+    @NSManaged var totalFloors: Int
+    @NSManaged var roomTypes: [PFObject]
     @NSManaged var entityID: PFObject!
     @NSManaged var createdBy: PFUser!
     

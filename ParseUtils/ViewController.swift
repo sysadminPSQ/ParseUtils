@@ -12,17 +12,29 @@ import Bolts
 import SwiftUtils
 
 var existingRF = [PFObject]()
+var existingRT = [PFObject]()
+var RF = [PFObject]()
 
 class ViewController: UIViewController {
 
     @IBOutlet var addRoomFacilitiesTF: UITextField!
     @IBOutlet var roomFacilitiesCV: UICollectionView!
+    
+    @IBOutlet var roomTypesTF: UITextField!
+    @IBOutlet var rtDescription: UITextField!
+    
+    @IBOutlet var buildingTF: UITextField!
+    @IBOutlet var totalFloorsTF: UITextField!
+    
     let collectionHelper = CollectionHelper()
     let pb = ParseBinder()
+    let rt = RoomType()
+    let building = Building()
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         loadRoomFacilities()
+        loadRoomTypes()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,17 +46,20 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    //MARK: Save room facilities
     @IBAction func saveRoomFacilities(sender: AnyObject) {
         
         self.view.endEditing(true)
         
         let rf = RoomFacility()
-        rf.name = "Room Service"
+        rf.name = addRoomFacilitiesTF.text
         
         pb.saveObj(rf,
             succFn: {
                 () in
                 println("Success")
+                self.addRoomFacilitiesTF.text = ""
+                self.loadRoomFacilities()
             },
             failFn: {
                 (error: NSError) in
@@ -52,6 +67,49 @@ class ViewController: UIViewController {
         })
     }
     
+    //MARK: Save Room Types
+    @IBAction func saveRoomTypes(sender: AnyObject) {
+        
+        
+        rt.name = roomTypesTF.text
+        rt["description"] = rtDescription.text
+        rt.roomFacilities = existingRF
+        
+        pb.saveObj(rt,
+            succFn: {
+                () in
+                println("Success")
+                self.roomTypesTF.text = ""
+                self.rtDescription.text = ""
+            },
+            failFn: {
+                (error: NSError) in
+                log.warning("RF - \(error.userInfo)")
+        })
+    }
+    
+    //MARK: Save Building
+    @IBAction func saveBuilding(sender: AnyObject) {
+        
+        
+        building.name = buildingTF.text
+        building.totalFloors = totalFloorsTF.text.toInt()!
+        building.roomTypes = existingRT
+        
+        pb.saveObj(building,
+            succFn: {
+                () in
+                println("Success")
+                self.buildingTF.text = ""
+                self.totalFloorsTF.text = ""
+            },
+            failFn: {
+                (error: NSError) in
+                log.warning("RF - \(error.userInfo)")
+        })
+    }
+    
+    //MARK: Load room facilities
     func loadRoomFacilities() {
         
         var query = PFQuery(className: "RoomFacility")
@@ -61,12 +119,9 @@ class ViewController: UIViewController {
             
             if error == nil {
                 
-                if let objects = objects as? [PFObject] {
+                if let object = objects as? [PFObject] {
                     
-                    for object in objects {
-                        
-                        existingRF.append(object)
-                    }
+                        existingRF = Array(object.generate())
                 }
                 
                 self.roomFacilitiesCV.reloadData()
@@ -76,6 +131,44 @@ class ViewController: UIViewController {
                 log.warning("Error: \(error!) \(error!.userInfo!)")
             }
         }
+    }
+    //MARK: Load room types
+    func loadRoomTypes() {
+        
+        var query = PFQuery(className: "RoomType")
+        //query.whereKey("name", equalTo: "Queen")
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                
+                if let object = objects as? [PFObject] {
+                    
+                    existingRT = Array(object.generate())
+                    
+                    for roomTypes in object {
+                        
+                        for roomfacilities in [roomTypes] {
+                            
+                            for object in roomfacilities["roomFacilities"] as! [PFObject] {
+                                
+                                let r: AnyObject = object["name"]
+                                println("\(r)")
+                            }
+                        }
+                    }
+                }
+                
+            } else {
+                // Log details of the failure
+                log.warning("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+    }
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        // to make sure the keyboard gets hidden once you touch outside the text box.
+        self.view.endEditing(true)
     }
 
 }
