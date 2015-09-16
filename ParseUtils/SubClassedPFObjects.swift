@@ -64,5 +64,22 @@ class Building : SubClassedPFObjects, PFSubclassing {
     @NSManaged var createdBy: PFUser!
     
 }
+class Floor : SubClassedPFObjects, PFSubclassing {
+    
+    override class func initialize() {
+        registerSubclass()
+    }
+    
+    class func parseClassName() -> String {
+        return "Floor"
+    }
+    
+    @NSManaged var name: String
+    @NSManaged var floorNumber: Int
+    @NSManaged var building: PFObject
+    @NSManaged var entityID: PFObject!
+    @NSManaged var createdBy: PFUser!
+    
+}
 
 

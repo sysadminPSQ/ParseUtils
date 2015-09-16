@@ -12,10 +12,11 @@ import Bolts
 import SwiftUtils
 import CZPicker
 
-var existingRF = [PFObject]()
-var existingRT = [PFObject]()
-var existingBuildings = [PFObject]()
-var RF = [PFObject]()
+var existingRF: [PFObject] = []
+var existingRT: [PFObject] = []
+var existingBuildings: [PFObject] = []
+var floorObjects: [PFObject] = []
+var RF: [PFObject] = []
 
 class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSource {
 
@@ -34,6 +35,7 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
     let pb = ParseBinder()
     let rt = RoomType()
     let building = Building()
+    var floor = Floor()
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -96,7 +98,6 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
     //MARK: Save Building
     @IBAction func saveBuilding(sender: AnyObject) {
         
-        
         building.name = buildingTF.text
         building.totalFloors = totalFloorsTF.text.toInt()!
         building.roomTypes = existingRT
@@ -105,15 +106,32 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
             succFn: {
                 () in
                 println("Success")
-                self.buildingTF.text = ""
-                self.totalFloorsTF.text = ""
+                
+                self.saveFloors()
             },
             failFn: {
                 (error: NSError) in
                 log.warning("RF - \(error.userInfo)")
         })
+        
     }
     
+    //MARK: Save floors
+    func saveFloors() {
+        
+        for (var i = 0; i <= totalFloorsTF.text.toInt(); i++) {
+            println("entered")
+            var floor = PFObject(className: "Floor")
+            floor["floorNumber"] = i as Int
+            floor["building"] = building as PFObject
+            floorObjects.insert(floor, atIndex: i)
+            println("the floor objects are: \(floorObjects)")
+        }
+        buildingTF.text = ""
+        totalFloorsTF.text = ""
+        PFObject.saveAllInBackground(floorObjects)
+        
+    }
     
     @IBAction func pickRoomType(sender: AnyObject) {
         

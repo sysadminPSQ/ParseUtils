@@ -53,15 +53,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             clientKey: "ivydkvmt3QqknStODRWaHf2H5QcwNKWCa8qTV0hh")
         
         // PFUser.enableRevocableSessionInBackground()
-        Parse.enableLocalDatastore()
+//        Parse.enableLocalDatastore()
         
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptionsInBackground(launchOptions, block: nil)
-        
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(5 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
-            NSException.raise(NSGenericException, format: "Everything is ok, this is just a test crash.", arguments: getVaList([]))
-        }
         
         // Overtiding the status bar default style to reflect in the entire application
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
