@@ -10,13 +10,14 @@ import UIKit
 import Parse
 import Bolts
 import SwiftUtils
+import CZPicker
 
 var existingRF = [PFObject]()
 var existingRT = [PFObject]()
 var existingBuildings = [PFObject]()
 var RF = [PFObject]()
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSource {
 
     @IBOutlet var addRoomFacilitiesTF: UITextField!
     @IBOutlet var roomFacilitiesCV: UICollectionView!
@@ -26,6 +27,8 @@ class ViewController: UIViewController {
     
     @IBOutlet var buildingTF: UITextField!
     @IBOutlet var totalFloorsTF: UITextField!
+    
+    var roomTypeNames: [String] = []
     
     let collectionHelper = CollectionHelper()
     let pb = ParseBinder()
@@ -111,6 +114,30 @@ class ViewController: UIViewController {
         })
     }
     
+    
+    @IBAction func pickRoomType(sender: AnyObject) {
+        
+        let picker = CZPickerView(headerTitle: "Room Types", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+        picker.delegate = self
+        picker.dataSource = self
+        picker.needFooterView = false
+        picker.show()
+    }
+    
+    func numberOfRowsInPickerView(pickerView: CZPickerView!) -> Int {
+        return roomTypeNames.count
+    }
+    
+    func czpickerView(pickerView: CZPickerView!, titleForRow row: Int) -> String! {
+        
+        return "\(roomTypeNames[row])"
+    }
+    
+    func czpickerView(pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int){
+        
+        buildingTF.text = roomTypeNames[row] as String
+    }
+    
     //MARK: Load room facilities
     func loadRoomFacilities() {
         
@@ -153,6 +180,10 @@ class ViewController: UIViewController {
                         
                         for roomfacilities in [roomTypes] {
                             
+                            let name = roomfacilities["name"] as! String
+                            println("\(name)")
+                            self.roomTypeNames.append(name)
+                            
                             for object in roomfacilities["roomFacilities"] as! [PFObject] {
                                 
                                 let r: AnyObject = object["name"]
@@ -187,7 +218,7 @@ class ViewController: UIViewController {
                     }
                 }
                 
-                println("The existing buildings are: \(existingBuildings)")
+                //println("The existing buildings are: \(existingBuildings)")
                 
             } else {
                 // Log details of the failure
