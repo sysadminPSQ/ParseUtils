@@ -13,6 +13,7 @@ import SwiftUtils
 
 var existingRF = [PFObject]()
 var existingRT = [PFObject]()
+var existingBuildings = [PFObject]()
 var RF = [PFObject]()
 
 class ViewController: UIViewController {
@@ -35,6 +36,7 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         loadRoomFacilities()
         loadRoomTypes()
+        loadBuildings()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,6 +134,7 @@ class ViewController: UIViewController {
             }
         }
     }
+    
     //MARK: Load room types
     func loadRoomTypes() {
         
@@ -153,11 +156,38 @@ class ViewController: UIViewController {
                             for object in roomfacilities["roomFacilities"] as! [PFObject] {
                                 
                                 let r: AnyObject = object["name"]
-                                println("\(r)")
+                                //println("\(r)")
                             }
                         }
                     }
                 }
+                
+            } else {
+                // Log details of the failure
+                log.warning("Error: \(error!) \(error!.userInfo!)")
+            }
+        }
+    }
+    
+    //MARK: Load exisitng Buidings
+    func loadBuildings() {
+        
+        var query = Building.query()
+        
+        query!.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                
+                if let object = objects as? [PFObject] {
+                    
+                    for buildings in object {
+                        
+                        existingBuildings.append(buildings)
+                    }
+                }
+                
+                println("The existing buildings are: \(existingBuildings)")
                 
             } else {
                 // Log details of the failure
