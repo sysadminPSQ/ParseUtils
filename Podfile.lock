@@ -4,12 +4,16 @@ PODS:
   - LogKit (1.0.4)
   - Parse (1.8.3):
     - Bolts/Tasks (>= 1.2.2)
+  - ParseCrashReporting (1.8.3):
+    - Bolts/Tasks (>= 1.2.2)
+    - Parse (~> 1.8.3)
   - SwiftUtils (0.0.1):
     - Parse
 
 DEPENDENCIES:
   - CZPicker
   - LogKit
+  - ParseCrashReporting
   - SwiftUtils (from `https://github.com/sysadminPSQ/SwiftUtils.git`)
 
 EXTERNAL SOURCES:
@@ -26,6 +30,7 @@ SPEC CHECKSUMS:
   CZPicker: bf966778ebd3af6c291b4a4190d08a0e2c5c6974
   LogKit: f785d7b331fd923a970c0970d49b009e8495cb7a
   Parse: 4b251ac63b76d12b334a32579cc3b174446f0c39
+  ParseCrashReporting: a75141b43e244e32ddb2a6a89c7b3d82d6590fda
   SwiftUtils: 16a3fb68f1cf7edcca1793921e9b9c3738951931
 
 COCOAPODS: 0.38.2
