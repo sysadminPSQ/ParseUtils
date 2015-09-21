@@ -18,7 +18,7 @@ var existingBuildings: [PFObject] = []
 var floorObjects: [PFObject] = []
 var RF: [PFObject] = []
 
-class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSource {
+class ViewController: UIViewController {
 
     @IBOutlet var addRoomFacilitiesTF: UITextField!
     @IBOutlet var roomFacilitiesCV: UICollectionView!
@@ -142,20 +142,6 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
         picker.show()
     }
     
-    func numberOfRowsInPickerView(pickerView: CZPickerView!) -> Int {
-        return roomTypeNames.count
-    }
-    
-    func czpickerView(pickerView: CZPickerView!, titleForRow row: Int) -> String! {
-        
-        return "\(roomTypeNames[row])"
-    }
-    
-    func czpickerView(pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int){
-        
-        buildingTF.text = roomTypeNames[row] as String
-    }
-    
     //MARK: Load room facilities
     func loadRoomFacilities() {
         
@@ -184,7 +170,7 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
     func loadRoomTypes() {
         
         let query = PFQuery(className: "RoomType")
-        //query.whereKey("name", equalTo: "Queen")
+        //query.whereKey("name", equalTo: "")
         query.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
@@ -273,4 +259,42 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         return collectionHelper.RoomFacilities(collectionView, indexPath: indexPath)
     }
     
+}
+
+extension ViewController:  CZPickerViewDelegate, CZPickerViewDataSource {
+    
+    func numberOfRowsInPickerView(pickerView: CZPickerView!) -> Int {
+        return roomTypeNames.count
+    }
+    
+    func czpickerView(pickerView: CZPickerView!, titleForRow row: Int) -> String! {
+        
+        return "\(roomTypeNames[row])"
+    }
+    
+    func czpickerView(pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int){
+        
+        buildingTF.text = roomTypeNames[row] as String
+        
+        let query = PFQuery(className: "RoomType")
+        query.whereKey("name", equalTo: buildingTF.text!)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                
+                if let object = objects {
+                    
+                    existingRT.removeAll()
+                    existingRT = Array(object.generate())
+                    for objects in existingRT {
+                        
+                        self.buildingTF.text = objects["description"] as? String
+                        
+                    }
+                    print(existingRT)
+                }
+            }
+        }
+    }
 }
