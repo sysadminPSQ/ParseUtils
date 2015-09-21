@@ -1,18 +1,16 @@
 PODS:
   - Bolts/Tasks (1.2.2)
   - CZPicker (0.3.6)
-  - LogKit (1.0.4)
-  - Parse (1.8.3):
+  - Parse (1.8.5):
     - Bolts/Tasks (>= 1.2.2)
-  - ParseCrashReporting (1.8.3):
+  - ParseCrashReporting (1.8.5):
     - Bolts/Tasks (>= 1.2.2)
-    - Parse (~> 1.8.3)
+    - Parse (~> 1.8.5)
   - SwiftUtils (0.0.1):
     - Parse
 
 DEPENDENCIES:
   - CZPicker
-  - LogKit
   - ParseCrashReporting
   - SwiftUtils (from `https://github.com/sysadminPSQ/SwiftUtils.git`)
 
@@ -22,15 +20,14 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwiftUtils:
-    :commit: 29464ccf2e9c3fcf5e2c29128451bb6f2988ff35
+    :commit: b49783fd69e6c97ce8ae3872c5015d943da04c6a
     :git: https://github.com/sysadminPSQ/SwiftUtils.git
 
 SPEC CHECKSUMS:
   Bolts: 20a2bd788273360cb1e31530dc19b8544eef2544
   CZPicker: bf966778ebd3af6c291b4a4190d08a0e2c5c6974
-  LogKit: f785d7b331fd923a970c0970d49b009e8495cb7a
-  Parse: 4b251ac63b76d12b334a32579cc3b174446f0c39
-  ParseCrashReporting: a75141b43e244e32ddb2a6a89c7b3d82d6590fda
+  Parse: 17ad8e0677ed682f7f00503860fcda0f4eb74168
+  ParseCrashReporting: d912cb10b7997ef79ac475db30997e64d48c2c98
   SwiftUtils: 16a3fb68f1cf7edcca1793921e9b9c3738951931
 
 COCOAPODS: 0.38.2

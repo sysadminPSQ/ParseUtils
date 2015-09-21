@@ -59,18 +59,18 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
         self.view.endEditing(true)
         
         let rf = RoomFacility()
-        rf.name = addRoomFacilitiesTF.text
+        rf.name = addRoomFacilitiesTF.text!
         
         pb.saveObj(rf,
             succFn: {
                 () in
-                println("Success")
+                print("Success")
                 self.addRoomFacilitiesTF.text = ""
                 self.loadRoomFacilities()
             },
             failFn: {
                 (error: NSError) in
-                log.warning("RF - \(error.userInfo)")
+                print("RF - \(error.userInfo)")
         })
     }
     
@@ -78,40 +78,40 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
     @IBAction func saveRoomTypes(sender: AnyObject) {
         
         
-        rt.name = roomTypesTF.text
+        rt.name = roomTypesTF.text!
         rt["description"] = rtDescription.text
         rt.roomFacilities = existingRF
         
         pb.saveObj(rt,
             succFn: {
                 () in
-                println("Success")
+                print("Success")
                 self.roomTypesTF.text = ""
                 self.rtDescription.text = ""
             },
             failFn: {
                 (error: NSError) in
-                log.warning("RF - \(error.userInfo)")
+                print("RF - \(error.userInfo)")
         })
     }
     
     //MARK: Save Building
     @IBAction func saveBuilding(sender: AnyObject) {
         
-        building.name = buildingTF.text
-        building.totalFloors = totalFloorsTF.text.toInt()!
+        building.name = buildingTF.text!
+        building.totalFloors = Int(totalFloorsTF.text!)!
         building.roomTypes = existingRT
         
         pb.saveObj(building,
             succFn: {
                 () in
-                println("Success")
+                print("Success")
                 
                 self.saveFloors()
             },
             failFn: {
                 (error: NSError) in
-                log.warning("RF - \(error.userInfo)")
+                print("RF - \(error.userInfo)")
         })
         
     }
@@ -119,13 +119,13 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
     //MARK: Save floors
     func saveFloors() {
         
-        for (var i = 0; i <= totalFloorsTF.text.toInt(); i++) {
-            println("entered")
-            var floor = PFObject(className: "Floor")
+        for (var i = 0; i <= Int(totalFloorsTF.text!); i++) {
+            print("entered")
+            let floor = PFObject(className: "Floor")
             floor["floorNumber"] = i as Int
             floor["building"] = building as PFObject
             floorObjects.insert(floor, atIndex: i)
-            println("the floor objects are: \(floorObjects)")
+            print("the floor objects are: \(floorObjects)")
         }
         buildingTF.text = ""
         totalFloorsTF.text = ""
@@ -159,14 +159,14 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
     //MARK: Load room facilities
     func loadRoomFacilities() {
         
-        var query = PFQuery(className: "RoomFacility")
+        let query = PFQuery(className: "RoomFacility")
         
         query.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+            (objects: [PFObject]?, error: NSError?) -> Void in
             
             if error == nil {
                 
-                if let object = objects as? [PFObject] {
+                if let object = objects {
                     
                         existingRF = Array(object.generate())
                 }
@@ -175,7 +175,7 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
                 
             } else {
                 // Log details of the failure
-                log.warning("Error: \(error!) \(error!.userInfo!)")
+                print("Error: \(error!) \(error!.userInfo)")
             }
         }
     }
@@ -183,29 +183,30 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
     //MARK: Load room types
     func loadRoomTypes() {
         
-        var query = PFQuery(className: "RoomType")
+        let query = PFQuery(className: "RoomType")
         //query.whereKey("name", equalTo: "Queen")
         query.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+            (objects: [PFObject]?, error: NSError?) -> Void in
             
             if error == nil {
                 
-                if let object = objects as? [PFObject] {
+                if let object = objects {
                     
                     existingRT = Array(object.generate())
+                    
+                    for items in existingRT {
+                        
+                        self.roomTypeNames.append(items["name"] as! String)
+                    }
                     
                     for roomTypes in object {
                         
                         for roomfacilities in [roomTypes] {
                             
-                            let name = roomfacilities["name"] as! String
-                            println("\(name)")
-                            self.roomTypeNames.append(name)
-                            
                             for object in roomfacilities["roomFacilities"] as! [PFObject] {
                                 
-                                let r: AnyObject = object["name"]
-                                //println("\(r)")
+                                let r = object["name"]
+                                print("\(r)")
                             }
                         }
                     }
@@ -213,7 +214,7 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
                 
             } else {
                 // Log details of the failure
-                log.warning("Error: \(error!) \(error!.userInfo!)")
+                print("Error: \(error!) \(error!.userInfo)")
             }
         }
     }
@@ -221,14 +222,14 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
     //MARK: Load exisitng Buidings
     func loadBuildings() {
         
-        var query = Building.query()
+        let query = Building.query()
         
         query!.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+            (objects: [PFObject]?, error: NSError?) -> Void in
             
             if error == nil {
                 
-                if let object = objects as? [PFObject] {
+                if let object = objects {
                     
                     for buildings in object {
                         
@@ -240,12 +241,12 @@ class ViewController: UIViewController, CZPickerViewDelegate, CZPickerViewDataSo
                 
             } else {
                 // Log details of the failure
-                log.warning("Error: \(error!) \(error!.userInfo!)")
+                print("Error: \(error!) \(error!.userInfo)")
             }
         }
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         // to make sure the keyboard gets hidden once you touch outside the text box.
         self.view.endEditing(true)
     }

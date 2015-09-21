@@ -66,11 +66,11 @@ extension UIViewController
     func validation(errorField: UITextField!, errorTitle: String!, errorMsg: String!) {
         
         // Create the alert controller
-        var alertController = UIAlertController(title: errorTitle, message: errorMsg, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: errorTitle, message: errorMsg, preferredStyle: .Alert)
         
         // Create the actions for OK, Cancel or even custom text of your choice
         
-        var okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel) {
+        let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel) {
             UIAlertAction in
             self.viewDidLoad()
         }
@@ -84,11 +84,11 @@ extension UIViewController
     func alert(Title: String, errorMsg: String) {
         
         // Create the alert controller
-        var alertController = UIAlertController(title: Title, message: errorMsg, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: Title, message: errorMsg, preferredStyle: .Alert)
         
         // Create the actions for OK, Cancel or even custom text of your choice
         
-        var okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel) {
+        let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel) {
             UIAlertAction in
             //self.viewDidLoad()
         }
@@ -122,8 +122,8 @@ extension UIViewController
     /* This function is to make sure that the view moves up and down relative to the keyboard hieght which tends to hide fields from view */
     
     func animateViewMoving (up:Bool, moveValue :CGFloat){
-        var movementDuration:NSTimeInterval = 0.3
-        var movement:CGFloat = ( up ? -moveValue : moveValue)
+        let movementDuration:NSTimeInterval = 0.3
+        let movement:CGFloat = ( up ? -moveValue : moveValue)
         UIView.beginAnimations( "animateView", context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
         UIView.setAnimationDuration(movementDuration )

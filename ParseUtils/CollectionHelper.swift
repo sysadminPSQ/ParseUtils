@@ -15,6 +15,10 @@ class CollectionHelper {
     
     var test: [PFObject]!
     
+    init() {
+        
+    }
+    
     func RoomFacilities(collectionView: UICollectionView, indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("roomFacilities", forIndexPath: indexPath) as! RoomFacilitiesCell

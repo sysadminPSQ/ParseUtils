@@ -9,34 +9,7 @@
 import UIKit
 import Parse
 import Bolts
-import LogKit
 import ParseCrashReporting
-
-let log = LXLogger(endpoints: [
-    
-    LXLogSerialConsoleEndpoint(
-        dateFormatter: {
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "HH':'mm':'ss'.'SSS"
-            dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-            return dateFormatter
-            }(),
-        entryFormatter: { entry in
-            return "\(entry.dateTime) [\(entry.logLevel.uppercaseString)] \(entry.message)"
-        }
-    ),
-    
-    LXLogFileEndpoint(
-        fileURL: (NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask) as? [NSURL])?.first?
-            .URLByAppendingPathComponent("logs", isDirectory: true)
-            .URLByAppendingPathComponent("log.txt"),
-        minimumLogLevel: .Notice,
-        entryFormatter: { entry in
-            return "\(entry.dateTime) (\(entry.timestamp)) [\(entry.logLevel.uppercaseString)] {thread: \(entry.threadID) '\(entry.threadName)' main: \(entry.isMainThread)} \(entry.functionName) <\(entry.fileName):\(entry.lineNumber).\(entry.columnNumber)> \(entry.message)"
-        }
-    ),
-    
-    ])
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -62,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
         // Navigation bar style changed using custom hex values for background color
-        var navigationBarAppearace = UINavigationBar.appearance()
+        let navigationBarAppearace = UINavigationBar.appearance()
         
         navigationBarAppearace.tintColor = uicolorFromHex(0xffffff)
         navigationBarAppearace.barTintColor = uicolorFromHex(0xef5265)
