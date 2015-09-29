@@ -122,7 +122,7 @@ class ViewController: UIViewController {
         for (var i = 0; i <= Int(totalFloorsTF.text!); i++) {
             print("entered")
             let floor = PFObject(className: "Floor")
-            floor["floorNumber"] = i as Int
+            floor["floorNumber"] = i
             floor["building"] = building as PFObject
             floorObjects.insert(floor, atIndex: i)
             print("the floor objects are: \(floorObjects)")
@@ -170,7 +170,7 @@ class ViewController: UIViewController {
     func loadRoomTypes() {
         
         let query = PFQuery(className: "RoomType")
-        //query.whereKey("name", equalTo: "")
+        query.whereKey("name", equalTo: "King")
         query.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
@@ -187,13 +187,12 @@ class ViewController: UIViewController {
                     
                     for roomTypes in object {
                         
-                        for roomfacilities in [roomTypes] {
+                        for items in roomTypes["roomFacilities"] as! [PFObject] {
                             
-                            for object in roomfacilities["roomFacilities"] as! [PFObject] {
+                            
+                                print(items["name"] as! String)
                                 
-                                let r = object["name"]
-                                print("\(r)")
-                            }
+                            
                         }
                     }
                 }
